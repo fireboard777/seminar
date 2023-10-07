@@ -1,45 +1,30 @@
-public class ExceptionExample {
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
-    // Метод, генерирующий исключение ArrayIndexOutOfBoundsException
-    public static void arrayOutOfBoundsException() {
-        int[] arr = new int[5];
-        // Попытка обратиться к элементу, выходящему за пределы массива
-        int element = arr[10];
-    }
-
-    // Метод, генерирующий исключение ArithmeticException (деление на 0)
-    public static void divisionByZero() {
-        int numerator = 10;
-        int denominator = 0;
-        // Попытка деления на 0
-        int result = numerator / denominator;
-    }
-
-    // Метод, генерирующий исключение NumberFormatException
-    public static void numberFormatException() {
-        String str = "abc";
-        // Попытка преобразования строки "abc" в число
-        int num = Integer.parseInt(str);
-    }
+public class Main {
 
     public static void main(String[] args) {
-        try {
-            // Вызываем каждый из методов для генерации исключений
-            arrayOutOfBoundsException();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Поймано исключение: ArrayIndexOutOfBoundsException");
+        float userInput = getFloatInput();
+        System.out.println("Вы ввели: " + userInput);
+    }
+
+    public static float getFloatInput() {
+        Scanner scanner = new Scanner(System.in);
+        float result = 0;
+        boolean inputValid = false;
+
+        while (!inputValid) {
+            try {
+                System.out.print("Введите дробное число (типа float): ");
+                result = scanner.nextFloat();
+                inputValid = true;
+            } catch (InputMismatchException e) {
+                // Ошибка при вводе, очищаем буфер ввода и пробуем снова
+                System.out.println("Ошибка ввода. Введите дробное число.");
+                scanner.nextLine(); // Очищаем буфер ввода
+            }
         }
 
-        try {
-            divisionByZero();
-        } catch (ArithmeticException e) {
-            System.out.println("Поймано исключение: ArithmeticException (деление на 0)");
-        }
-
-        try {
-            numberFormatException();
-        } catch (NumberFormatException e) {
-            System.out.println("Поймано исключение: NumberFormatException");
-        }
+        return result;
     }
 }
